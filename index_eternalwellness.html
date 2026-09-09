@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Eternal Wellness Performance · AEVA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    /* AEVA tokens (extracted from design system) */
+    --teal-100:#EAF6F7; --teal-200:#CBE9ED; --teal-300:#A6D8E2; --teal-400:#7FC6D6;
+    --teal-500:#4C9DAD; --teal-600:#3C8896; --teal-700:#2F6D7B; --teal-800:#21505C; --teal-900:#183A44;
+
+    --slate-50:#F5F7FA; --slate-100:#EDF0F5; --slate-150:#D3DBE9; --slate-200:#BFC8D9;
+    --slate-300:#B8C3D6; --slate-400:#8F9BB7; --slate-500:#6C7B97;
+    --slate-600:#5A6A89; --slate-700:#46546E; --slate-800:#3A475F; --slate-900:#1E2A38;
+
+    --amber-100:#FDF3E5; --amber-300:#F0CD98; --amber-500:#E29B32; --amber-700:#B07020;
+    --success-500:#2D9D78;
+    --cream:#FDF3E5; --white:#FFFFFF;
+
+    --bg-app:var(--slate-100);
+    --bg-frosted:rgba(255,255,255,0.7);
+    --bg-surface:var(--white);
+
+    --fg-strong:var(--slate-800);
+    --fg-default:var(--slate-600);
+    --fg-muted:var(--slate-500);
+    --fg-subtle:var(--slate-400);
+
+    --gradient-brand: linear-gradient(180deg, #2F6873 0%, #59C4D9 100%);
+    --gradient-brand-h: linear-gradient(44.71deg, #2F6873 -18.34%, #59C4D9 120.98%);
+
+    --shadow-xs: 2px 2px 4px 0 rgba(96,132,139,0.10);
+    --shadow-sm: 0 2px 8px 0 rgba(96,132,139,0.10);
+    --shadow-md: 0 6px 16px 0 rgba(96,132,139,0.12);
+    --shadow-3d: 0 8px 24px -4px rgba(96,132,139,0.18), 0 2px 6px 0 rgba(214,218,230,1), inset 0 1px 0 0 rgba(255,255,255,0.6);
+
+    --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-xl:20px; --radius-pill:9999px;
+
+    /* Channel colors */
+    --c-google:var(--amber-500);
+    --c-google-tint:var(--amber-100);
+    --c-meta:var(--teal-500);
+    --c-meta-tint:var(--teal-100);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    height:auto;overflow-x:hidden;overflow-y:auto;
+    font-family:"Poppins",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    color:var(--fg-default);
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  }
+  body{
+    background:var(--bg-app);
+    display:block;
+  }
+
+  /* ─────────────────────────────────────────────── HEADER (brand gradient bar) */
+  header{
+    background:var(--gradient-brand);
+    padding:18px 32px 22px;
+    border-bottom-left-radius:12px;border-bottom-right-radius:12px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+    box-shadow:0 6px 18px -8px rgba(47,104,115,0.35);
+    position:relative;z-index:2;
+  }
+  .brand{display:flex;align-items:center;gap:18px}
+  .aeva-logo{height:28px;width:auto;display:block;filter:brightness(0) invert(1)}
+  .brand-divider{width:1px;height:30px;background:rgba(255,255,255,0.25);flex-shrink:0}
+  .ew-logo{height:46px;width:auto;display:block;opacity:.96}
+  .title-block{margin-left:6px}
+  .eyebrow{
+    font-size:10px;letter-spacing:1.6px;text-transform:uppercase;
+    font-weight:600;color:rgba(255,255,255,0.82);margin-bottom:4px;
+  }
+  h1{
+    font-weight:600;font-size:18px;line-height:1.1;color:#fff;letter-spacing:-.1px;
+  }
+  h1 em{font-style:normal;font-weight:400;color:rgba(255,255,255,0.78)}
+
+  .cta-row{display:flex;gap:10px;align-items:center}
+  .pill{
+    background:rgba(255,255,255,0.14);
+    border:1px solid rgba(255,255,255,0.22);
+    padding:9px 16px;border-radius:var(--radius-pill);
+    font-size:12px;font-weight:500;color:#fff;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .pill i{font-size:11px;opacity:.85}
+  .pill b{font-weight:600}
+  .btn{
+    padding:10px 18px;border-radius:var(--radius-sm);
+    background:#fff;color:var(--teal-700);
+    font-family:inherit;font-weight:600;font-size:12px;letter-spacing:.1px;
+    border:0;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:filter 160ms ease,transform 160ms ease;
+    box-shadow:0 2px 6px rgba(24,58,68,0.18);
+  }
+  .btn:hover{filter:brightness(1.03)}
+  .btn:active{transform:scale(.98)}
+
+  /* ─────────────────────────────────────────────── GRID */
+  main{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    grid-template-rows:repeat(5,minmax(0,1fr));
+    gap:14px;
+    padding:16px 24px 22px;
+    min-height:0;position:relative;z-index:1;
+  }
+
+  /* Base card — frosted white */
+  .tile{
+    background:var(--bg-frosted);
+    border:1px solid var(--white);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-xs);
+    padding:16px 18px;
+    display:flex;flex-direction:column;
+    transition:transform .25s ease, box-shadow .25s ease;
+    overflow:hidden;position:relative;color:var(--fg-default);
+  }
+  .tile:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+
+  /* Hero tile — brand-gradient feature card */
+  .tile.hero{
+    background:var(--gradient-brand);
+    border:1px solid rgba(255,255,255,0.35);
+    box-shadow:var(--shadow-3d);
+    color:#fff;
+  }
+
+  /* Channel-accented compact cards (left edge accent strip) */
+  .tile.brand-google::before,
+  .tile.brand-meta::before{
+    content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;
+  }
+  .tile.brand-google::before{background:var(--c-google)}
+  .tile.brand-meta::before{background:var(--c-meta)}
+
+  /* Channel chip in card corners */
+  .ch-chip{
+    position:absolute;top:14px;right:14px;
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:9.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;
+    padding:4px 8px;border-radius:var(--radius-pill);
+  }
+  .ch-chip.g{background:var(--c-google-tint);color:var(--amber-700)}
+  .ch-chip.m{background:var(--c-meta-tint);color:var(--teal-700)}
+  .ch-chip i{font-size:9px}
+
+  /* ─── Grid placement (unchanged from source) */
+  .t-hero        {grid-column:1 / span 4; grid-row:1 / span 2}
+  .t-top-row     {grid-column:5 / span 8; grid-row:1; display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .t-trend       {grid-column:5 / span 8; grid-row:2 / span 2}
+  .t-summary     {grid-column:1 / span 4; grid-row:3 / span 3}
+  .t-g-cpc       {grid-column:5 / span 2; grid-row:4}
+  .t-m-cpm       {grid-column:7 / span 2; grid-row:4}
+  .t-g-clicks    {grid-column:5 / span 2; grid-row:5}
+  .t-m-reach     {grid-column:7 / span 2; grid-row:5}
+  .t-share       {grid-column:9 / span 4; grid-row:4 / span 2}
+
+  /* ─── Typography inside cards */
+  .label{
+    font-size:10px;letter-spacing:1.6px;text-transform:uppercase;
+    font-weight:600;color:var(--fg-muted);
+  }
+  .number{
+    font-weight:600;font-size:38px;letter-spacing:-1px;line-height:1;
+    color:var(--fg-strong);font-feature-settings:"tnum";margin-top:6px;
+  }
+  .number small{font-size:16px;font-weight:500;color:var(--fg-muted)}
+  .caption{margin-top:auto;padding-top:8px;font-size:12px;color:var(--fg-default);font-weight:400;line-height:1.4}
+  .caption b{font-weight:600;color:var(--fg-strong)}
+  .delta{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:11px;font-weight:600;color:var(--success-500);
+  }
+
+  /* big-number tiles */
+  .t-google-conv,.t-meta-leads,.t-total{display:grid;grid-template-rows:auto 1fr auto;padding-top:18px}
+  .t-google-conv .number{font-size:56px;letter-spacing:-2px;margin:0;align-self:center;color:var(--amber-500)}
+  .t-meta-leads .number{font-size:56px;letter-spacing:-2px;margin:0;align-self:center;color:var(--teal-600)}
+  .t-total .number{font-size:38px;letter-spacing:-1px;margin:0;align-self:center}
+  .t-total .number small{font-size:16px}
+
+  /* compact KPI tiles */
+  .compact{display:grid;grid-template-rows:auto 1fr auto;padding-left:22px}
+  .compact .label{font-size:9.5px;letter-spacing:1.4px;align-self:start}
+  .compact .number{font-size:30px;margin:0;align-self:center}
+  .compact.brand-google .number{color:var(--amber-500)}
+  .compact.brand-meta .number{color:var(--teal-600)}
+  .compact .caption{font-size:11px;padding-top:0;align-self:end}
+
+  /* ─── Hero internals */
+  .hero-eyebrow{
+    font-size:10px;letter-spacing:1.6px;text-transform:uppercase;
+    font-weight:600;color:rgba(255,255,255,0.82);
+  }
+  .hero-title{
+    font-weight:500;font-size:22px;line-height:1.28;color:#fff;
+    margin-top:8px;letter-spacing:-.2px;
+  }
+  .hero-title em{font-style:normal;font-weight:700;color:#fff}
+  .hero-title em.g{color:#FDE3B6}
+  .hero-title em.m{color:#CBEDF4}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}
+  .h-stat{
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.22);
+    border-radius:var(--radius-md);
+    padding:10px 12px;
+  }
+  .h-stat .l{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.78);font-weight:500}
+  .h-stat .v{font-weight:600;font-size:20px;margin-top:3px;color:#fff;letter-spacing:-.4px;font-feature-settings:"tnum"}
+  .h-stat .s{font-size:10.5px;color:rgba(255,255,255,0.78);font-weight:400;margin-top:2px}
+
+  /* ─── Trend tile */
+  .trend-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+  .trend-head .h-title{font-weight:600;font-size:14px;color:var(--fg-strong);margin-top:3px;letter-spacing:-.1px}
+  .legend-inline{display:flex;gap:14px;font-size:11px;font-weight:500;color:var(--fg-default)}
+  .legend-inline span{display:flex;align-items:center;gap:6px}
+  .legend-inline .dot{width:9px;height:9px;border-radius:50%}
+  .legend-inline .dot.g{background:var(--c-google)}
+  .legend-inline .dot.m{background:var(--c-meta)}
+
+  .trend-stack{flex:1;display:grid;grid-template-rows:1.55fr .9fr;gap:6px;min-height:0}
+  .chart-block{position:relative;min-height:0;display:flex;flex-direction:column}
+  .micro-label{
+    font-size:9px;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--fg-subtle);font-weight:600;margin:2px 0;
+  }
+  .chart-wrap{flex:1;position:relative;min-height:0}
+
+  /* ─── Share donut */
+  .pie-wrap{position:relative;flex:1;min-height:0;margin-top:4px}
+  .pie-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none}
+  .pie-center .l{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg-subtle);font-weight:600}
+  .pie-center .v{font-weight:700;font-size:22px;color:var(--fg-strong);margin-top:2px;letter-spacing:-.4px}
+  .legend-block{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  .legend-block .row{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+  .legend-block .row .left{display:flex;align-items:center;gap:8px;color:var(--fg-strong);font-weight:500}
+  .legend-block .row .left .dot{width:10px;height:10px;border-radius:50%}
+  .legend-block .row .v{font-weight:600;color:var(--fg-strong);font-feature-settings:"tnum"}
+  .legend-block .row .pct{color:var(--fg-muted);font-weight:500;margin-left:6px;font-size:11px}
+
+  /* ─── Summary tile — brand-gradient feature card (matches hero) */
+  .t-summary{
+    padding:18px 20px;
+    background:var(--gradient-brand);
+    border:1px solid rgba(255,255,255,0.35);
+    box-shadow:var(--shadow-3d);
+    color:#fff;
+  }
+  .t-summary .label{
+    margin-bottom:8px;color:rgba(255,255,255,0.82);
+  }
+  .summary-title{
+    font-weight:500;font-size:20px;color:#fff;
+    line-height:1.3;margin-bottom:12px;letter-spacing:-.2px;
+  }
+  .summary-title em{font-style:normal;font-weight:700;color:#CBEDF4}
+  .summary-body{font-size:13.5px;line-height:1.65;color:rgba(255,255,255,0.88);font-weight:400;flex:1;min-height:0}
+  .summary-body p + p{margin-top:10px}
+  .summary-body b{font-weight:600;color:#fff}
+  .tag-g{
+    display:inline-flex;align-items:center;gap:4px;
+    background:rgba(253,227,182,0.18);color:#FDE3B6;
+    padding:1px 7px;border-radius:var(--radius-pill);
+    font-weight:600;font-size:11.5px;
+  }
+  .tag-m{
+    display:inline-flex;align-items:center;gap:4px;
+    background:rgba(203,237,244,0.18);color:#CBEDF4;
+    padding:1px 7px;border-radius:var(--radius-pill);
+    font-weight:600;font-size:11.5px;
+  }
+  .tag-g i,.tag-m i{font-size:9px}
+
+  /* ─────────────────────────────────────────────── RESPONSIVE
+     Desktop keeps the precise 12-col × 5-row dashboard.
+     Below 1280px we tighten spacing; below 1024px we let the page
+     scroll and reflow to a 6-col grid; below 640px everything stacks. */
+
+  @media (max-width:1280px){
+    main{padding:14px 16px 18px;gap:12px}
+    header{padding:16px 20px}
+    .number{font-size:32px}
+    .t-google-conv .number,.t-meta-leads .number{font-size:46px}
+    .t-total .number{font-size:30px}
+    .summary-title{font-size:18px}
+    .summary-body{font-size:12.5px;line-height:1.55}
+    .hero-title{font-size:19px}
+    .h-stat .v{font-size:18px}
+  }
+
+  /* ── Tablet / small laptop: release the fixed viewport, let it scroll */
+  @media (max-width:1024px){
+
+    header{
+      padding:14px 18px;
+      flex-wrap:wrap;gap:14px;
+      border-radius:0 0 12px 12px;
+    }
+    .brand{flex-wrap:wrap;gap:14px}
+    .cta-row{flex-wrap:wrap}
+
+    /* Collapse the rigid 12-col / 5-row grid into a 6-col flow.
+       Each tile gets a sensible min-height so charts have room. */
+    main{
+      grid-template-columns:repeat(6,1fr);
+      grid-template-rows:none;
+      grid-auto-rows:minmax(160px,auto);
+      padding:14px 16px 20px;
+    }
+    .t-hero       {grid-column:1 / span 6;grid-row:auto;min-height:280px}
+    .t-top-row    {grid-column:1 / span 6;grid-row:auto;grid-template-columns:repeat(3,1fr)}
+    .t-trend      {grid-column:1 / span 6;grid-row:auto;min-height:420px}
+    .t-summary    {grid-column:1 / span 6;grid-row:auto;min-height:320px}
+    .t-g-cpc      {grid-column:1 / span 3;grid-row:auto}
+    .t-m-cpm      {grid-column:4 / span 3;grid-row:auto}
+    .t-g-clicks   {grid-column:1 / span 3;grid-row:auto}
+    .t-m-reach    {grid-column:4 / span 3;grid-row:auto}
+    .t-share      {grid-column:1 / span 6;grid-row:auto;min-height:340px}
+
+    .hero-stats{grid-template-columns:repeat(4,1fr)}
+  }
+
+  /* ── Mobile: single-column stack, smaller chrome */
+  @media (max-width:640px){
+    header{
+      padding:14px 16px;
+      flex-direction:column;align-items:flex-start;
+      border-radius:0 0 10px 10px;
+    }
+    .brand{gap:10px;width:100%}
+    .aeva-logo{height:24px}
+    .ew-logo{height:36px}
+    .brand-divider{height:24px}
+    .title-block{margin-left:0;flex-basis:100%}
+    h1{font-size:15px;line-height:1.2}
+    .eyebrow{font-size:9px;letter-spacing:1.4px}
+    .cta-row{width:100%;justify-content:space-between;gap:8px}
+    .pill{padding:7px 12px;font-size:11px}
+    .btn{padding:9px 14px;font-size:11px}
+
+    main{
+      grid-template-columns:1fr;
+      gap:12px;
+      padding:12px 12px 18px;
+      grid-auto-rows:auto;
+    }
+    .tile{padding:14px 14px;border-radius:14px}
+
+    /* All tiles span the single column */
+    .t-hero,.t-top-row,.t-trend,.t-summary,
+    .t-g-cpc,.t-m-cpm,.t-g-clicks,.t-m-reach,.t-share{
+      grid-column:1 / -1;min-height:0;
+    }
+    .t-hero{min-height:auto}
+    .t-trend{min-height:380px}
+    .t-share{min-height:300px}
+
+    /* Top KPI row: 3 cards become a stacked row of compact cards */
+    .t-top-row{
+      grid-template-columns:1fr;gap:12px;
+    }
+
+    /* Hero internals scale down */
+    .hero-title{font-size:17px;line-height:1.32}
+    .hero-stats{grid-template-columns:1fr 1fr;gap:8px}
+    .h-stat{padding:9px 10px}
+    .h-stat .v{font-size:17px}
+    .h-stat .s{font-size:10px}
+
+    /* Big-number tiles dial back */
+    .t-google-conv,.t-meta-leads{padding-top:16px}
+    .t-google-conv .number,.t-meta-leads .number{font-size:42px;letter-spacing:-1.5px}
+    .t-total .number{font-size:28px}
+    .t-total .number small{font-size:14px}
+
+    /* Channel chip moves inline so it doesn't overlap numbers */
+    .ch-chip{top:12px;right:12px;font-size:9px;padding:3px 7px}
+
+    /* Compact KPI tiles */
+    .compact{padding-left:18px;padding-top:14px;padding-bottom:14px}
+    .compact .number{font-size:26px}
+
+    /* Summary */
+    .t-summary{padding:16px 16px}
+    .summary-title{font-size:17px;margin-bottom:10px}
+    .summary-body{font-size:13px;line-height:1.6}
+
+    /* Trend tile internals */
+    .trend-head{flex-direction:column;gap:8px;margin-bottom:8px}
+    .legend-inline{font-size:10.5px;gap:12px}
+    .trend-stack{grid-template-rows:1.4fr 1fr;gap:8px}
+
+    /* Share legend */
+    .legend-block .row{font-size:11.5px}
+    .pie-center .v{font-size:20px}
+  }
+
+  /* Very narrow phones */
+  @media (max-width:380px){
+    h1{font-size:14px}
+    .pill{font-size:10.5px;padding:6px 10px}
+    .btn{font-size:10.5px;padding:8px 12px}
+    .hero-title{font-size:16px}
+    .summary-title{font-size:16px}
+    .t-google-conv .number,.t-meta-leads .number{font-size:38px}
+  }
+
+  /* Short screens: section 01 is a fixed viewport, so scale its densest
+     tile down rather than clipping the last lines of the summary. */
+  @media (max-height:1010px){
+    .summary-title{font-size:17px;margin-bottom:9px}
+    .summary-body{font-size:12.5px;line-height:1.5}
+    .summary-body p + p{margin-top:8px}
+    .hero-title{font-size:19px}
+  }
+  @media (max-height:880px){
+    .summary-title{font-size:16px;margin-bottom:7px}
+    .summary-body{font-size:11.8px;line-height:1.45}
+    .hero-title{font-size:17px;line-height:1.26;margin-top:6px}
+    .hero-stats{gap:7px}
+    .h-stat{padding:8px 10px}
+    .h-stat .v{font-size:17px}
+    .h-stat .s{font-size:10px}
+    .t-google-conv .number,.t-meta-leads .number{font-size:42px}
+    .t-google-conv,.t-meta-leads,.t-total{padding-top:15px}
+  }
+
+  /* ═══════════════════════════════════════════════ PART 02 · REVENUE
+     Added tokens. Google amber + Meta teal carry over from part 01;
+     revenue green and the break-even rose are new and were validated
+     for CVD separation against both. */
+  :root{
+    --c-rev:#2E7D32;   --c-rev-tint:#E8F3E9;  --c-rev-dark:#215A24;
+    --c-cost:#C2596B;  --c-cost-tint:#FAECEE; --c-cost-dark:#8E3A49;
+    --c-neg:#C2596B;   --c-neg-tint:#FAECEE;
+  }
+
+  /* Section 01 becomes exactly one viewport; the page scrolls past it */
+  .screen{height:100vh;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
+
+  /* ─── Section divider band */
+  .section-head{
+    padding:26px 24px 8px;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  }
+  .section-head .sh-left{display:flex;align-items:flex-end;gap:14px}
+  .sh-num{
+    font-weight:700;font-size:34px;line-height:.85;letter-spacing:-1.5px;
+    color:var(--slate-200);font-feature-settings:"tnum";
+  }
+  .sh-eyebrow{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;font-weight:600;color:var(--fg-muted)}
+  .sh-title{font-weight:600;font-size:19px;color:var(--fg-strong);letter-spacing:-.2px;margin-top:3px}
+  .sh-title em{font-style:normal;font-weight:400;color:var(--fg-muted)}
+  .sh-pill{
+    background:var(--white);border:1px solid var(--slate-150);
+    padding:8px 14px;border-radius:var(--radius-pill);
+    font-size:11.5px;font-weight:500;color:var(--fg-default);
+    display:inline-flex;align-items:center;gap:8px;flex-shrink:0;
+  }
+  .sh-pill i{font-size:10px;color:var(--fg-subtle)}
+  .sh-pill b{font-weight:600;color:var(--fg-strong)}
+
+  /* ─── Revenue grid */
+  main.rev{
+    grid-template-rows:none;grid-auto-rows:auto;
+    padding:8px 24px 34px;
+  }
+  .v-cards     {grid-column:1 / span 12; grid-row:1; display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .v-month     {grid-column:1 / span 8;  grid-row:2; min-height:420px}
+  .v-consult   {grid-column:9 / span 4;  grid-row:2}
+  .v-services  {grid-column:1 / span 12; grid-row:3}
+  .v-platform  {grid-column:1 / span 7;  grid-row:4}
+  .v-note      {grid-column:8 / span 5;  grid-row:4}
+
+  /* ─── Headline cards. Padding and type are set so the card hugs its
+     number instead of floating it in an oversized box. */
+  .vcard{padding:14px 16px 15px;display:block}
+  .vcard .l{
+    font-size:9px;letter-spacing:1.3px;text-transform:uppercase;
+    font-weight:600;color:var(--fg-muted);white-space:nowrap;
+  }
+  .vcard .n{
+    font-weight:600;font-size:28px;line-height:1.05;letter-spacing:-1px;
+    margin-top:7px;font-feature-settings:"tnum";color:var(--fg-strong);
+  }
+  .vcard .n small{font-size:14px;font-weight:500;letter-spacing:-.2px}
+  .vcard .s{font-size:10.5px;line-height:1.35;color:var(--fg-muted);margin-top:6px}
+  .vcard .s b{font-weight:600;color:var(--fg-default)}
+  .vcard.pos .n{color:var(--c-rev)}
+  .vcard.pos .n small{color:var(--c-rev)}
+  .vcard.cost .n{color:var(--c-cost)}
+  .vcard.cost .n small{color:var(--c-cost)}
+  .vcard.accent{
+    background:var(--gradient-brand);border:1px solid rgba(255,255,255,0.35);
+    box-shadow:var(--shadow-3d);
+  }
+  .vcard.accent .l{color:rgba(255,255,255,0.82)}
+  .vcard.accent .n{color:#fff}
+  .vcard.accent .s{color:rgba(255,255,255,0.8)}
+  .vcard.accent .s b{color:#fff}
+
+  /* Services table: fixed proportions with an inline share bar filling
+     the span between the name and the figures. */
+  .v-services table.dtable{table-layout:fixed}
+  .v-services th:nth-child(1),.v-services td:nth-child(1){width:34%}
+  .v-services th:nth-child(2),.v-services td:nth-child(2){width:26%}
+  .v-services th:nth-child(3),.v-services td:nth-child(3){width:15%}
+  .v-services th:nth-child(4),.v-services td:nth-child(4){width:12.5%}
+  .v-services th:nth-child(5),.v-services td:nth-child(5){width:12.5%}
+  .sharecell{display:flex;align-items:center;gap:10px}
+  .sharecell .bar{flex:1;height:8px;border-radius:4px;background:var(--slate-100)}
+  .sharecell .bar span{display:block;height:100%;border-radius:4px;background:var(--c-rev)}
+  .sharecell .pc{
+    width:42px;text-align:right;font-size:11px;font-weight:600;
+    color:var(--fg-default);font-feature-settings:"tnum";flex-shrink:0;
+  }
+  tr.zero .sharecell .pc{color:var(--fg-subtle);font-weight:500}
+
+  /* Footer stat strip under the services table */
+  .svc-foot{
+    margin-top:16px;padding-top:14px;border-top:1px solid var(--slate-150);
+    display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+  }
+  .svc-foot > div{display:flex;flex-direction:column;gap:4px}
+  .svc-foot .l{font-size:9px;letter-spacing:1.2px;text-transform:uppercase;font-weight:600;color:var(--fg-muted)}
+  .svc-foot .v{font-weight:600;font-size:16px;color:var(--fg-strong);font-feature-settings:"tnum";letter-spacing:-.3px}
+
+  /* ─── Charts */
+  .chart-tall{flex:1;position:relative;min-height:0}
+  .month-stack{flex:1;display:grid;grid-template-rows:1.7fr .8fr;gap:10px;min-height:0}
+  .legend-inline .dot.r{background:var(--c-rev)}
+  .legend-inline .dot.cost{background:var(--c-cost)}
+  .legend-inline .dot.neg{background:var(--c-neg)}
+  .legend-inline .swatch{
+    width:14px;height:9px;border-radius:2px;display:inline-block;
+  }
+  .be-note{font-size:10px;color:var(--fg-subtle);font-weight:500;margin-top:2px}
+
+  /* ─── Funnel (consultation pipeline) */
+  .funnel{display:flex;flex-direction:column;gap:11px;margin-top:12px}
+  .fstep .frow{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;margin-bottom:5px}
+  .fstep .fl{color:var(--fg-default);font-weight:500}
+  .fstep .fv{font-weight:600;color:var(--fg-strong);font-feature-settings:"tnum"}
+  .ftrack{height:9px;border-radius:5px;background:var(--slate-100);overflow:hidden}
+  .ftrack span{display:block;height:100%;border-radius:5px}
+  .ftrack span.a{background:var(--teal-400)}
+  .ftrack span.b{background:var(--teal-500)}
+  .ftrack span.c{background:var(--teal-700)}
+  .ftrack span.d{background:var(--c-rev)}
+
+  .hilite{
+    margin-top:16px;background:var(--cream);
+    border:1px solid var(--amber-300);border-radius:var(--radius-md);
+    padding:14px 16px;
+  }
+  .hilite .l{font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600;color:var(--amber-700)}
+  .hilite .v{font-weight:600;font-size:40px;line-height:1;letter-spacing:-1.5px;color:var(--amber-700);margin-top:6px;font-feature-settings:"tnum"}
+  .hilite .s{font-size:11.5px;color:var(--fg-default);margin-top:6px;line-height:1.45}
+  .hilite .s b{color:var(--fg-strong);font-weight:600}
+
+  /* ─── Data tables */
+  .tbl-wrap{overflow-x:auto;margin-top:10px}
+  table.dtable{width:100%;border-collapse:collapse;font-size:12px}
+  table.dtable th{
+    font-size:9px;letter-spacing:1.2px;text-transform:uppercase;font-weight:600;
+    color:var(--fg-muted);text-align:right;padding:0 0 8px 10px;white-space:nowrap;
+    border-bottom:1px solid var(--slate-150);
+  }
+  table.dtable th:first-child{text-align:left;padding-left:0}
+  table.dtable td{
+    padding:7px 0 7px 10px;text-align:right;white-space:nowrap;
+    border-bottom:1px solid rgba(191,200,217,0.35);color:var(--fg-default);
+    font-feature-settings:"tnum";
+  }
+  table.dtable td:first-child{text-align:left;padding-left:0;white-space:normal}
+  table.dtable td.money{font-weight:600;color:var(--fg-strong)}
+  table.dtable tr.zero td{color:var(--fg-subtle)}
+  table.dtable tr.zero td.money{color:var(--fg-subtle);font-weight:500}
+  table.dtable tr.tot td{
+    border-bottom:0;border-top:2px solid var(--slate-200);
+    font-weight:700;color:var(--fg-strong);padding-top:9px;
+  }
+  .svc{display:flex;align-items:center;gap:9px}
+  .svc .sq{width:9px;height:9px;border-radius:2px;background:var(--c-rev);flex-shrink:0}
+  .svc .sq.mute{background:var(--slate-200)}
+  .svc .nm{font-weight:500;color:var(--fg-strong)}
+  .svc .sub{display:block;font-size:10.5px;color:var(--fg-muted);font-weight:400;margin-top:1px}
+  .pos{color:var(--c-rev);font-weight:600}
+  .neg{color:var(--c-neg);font-weight:600}
+  .chip-g,.chip-m{
+    display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;
+  }
+  .chip-g::before,.chip-m::before{content:"";width:9px;height:9px;border-radius:2px}
+  .chip-g::before{background:var(--c-google)}
+  .chip-m::before{background:var(--c-meta)}
+
+  /* ─── Mini stat rows (fill the tall tiles with something useful) */
+  .mini-rows{margin-top:auto;padding-top:16px;display:flex;flex-direction:column}
+  .mini-rows div{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:8px 0;border-top:1px solid rgba(191,200,217,0.4);
+    font-size:11.5px;color:var(--fg-default);
+  }
+  .mini-rows div b{font-weight:600;color:var(--fg-strong);font-feature-settings:"tnum";white-space:nowrap}
+
+  /* ─── Method note */
+  .note-list{margin-top:10px;display:flex;flex-direction:column;gap:9px}
+  .note-list div{
+    font-size:11.5px;line-height:1.5;color:var(--fg-default);
+    padding-left:12px;border-left:2px solid var(--slate-150);
+  }
+  .note-list b{color:var(--fg-strong);font-weight:600}
+
+  /* ─── Responsive for part 02 */
+  @media (max-width:1280px){
+    main.rev{padding:8px 16px 28px}
+    .kpi .number{font-size:29px}
+    .hilite .v{font-size:34px}
+  }
+  @media (max-width:1024px){
+    .screen{height:auto;display:block;overflow:visible}
+    .section-head{padding:22px 16px 6px}
+    main.rev{grid-template-columns:repeat(6,1fr);grid-auto-rows:auto}
+    .v-cards,.v-month,.v-consult,.v-services,.v-platform,.v-note{
+      grid-column:1 / span 6;grid-row:auto;
+    }
+    .v-cards{grid-template-columns:repeat(3,1fr)}
+    .v-month{min-height:440px}
+  }
+  @media (max-width:640px){
+    .section-head{flex-direction:column;align-items:flex-start;gap:12px;padding:20px 12px 4px}
+    .sh-num{font-size:28px}
+    .sh-title{font-size:16px}
+    main.rev{grid-template-columns:1fr;padding:6px 12px 26px}
+    .v-cards,.v-month,.v-consult,.v-services,.v-platform,.v-note{
+      grid-column:1 / -1;grid-row:auto;
+    }
+    .v-cards{grid-template-columns:repeat(2,1fr);gap:12px}
+    .svc-foot{grid-template-columns:repeat(2,1fr);gap:14px}
+
+    .v-month{min-height:400px}
+    .month-stack{grid-template-rows:1.5fr 1fr}
+    table.dtable{font-size:11.5px}
+    .hilite .v{font-size:36px}
+  }
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+<header>
+  <div class="brand">
+    <img class="aeva-logo" src="images/Aeva-logo.svg" alt="AEVA">
+    <span class="brand-divider" aria-hidden="true"></span>
+    <img class="ew-logo" src="images/logo-w-eternal.png" alt="Eternal Wellness Medical Spa">
+    <div class="title-block">
+      <div class="eyebrow">performance hub</div>
+      <h1>Paid Ads Performance · <em>Meta &amp; Google</em></h1>
+    </div>
+  </div>
+  <div class="cta-row">
+    <div class="pill"><i class="far fa-calendar"></i>Apr 24 → Sep 4 · <b>2026</b></div>
+    <button class="btn"><i class="fas fa-arrow-down-to-bracket"></i>Export Report</button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="tile hero t-hero">
+    <div class="hero-eyebrow">headline · apr 24 → sep 4</div>
+    <div class="hero-title"><em class="m">Meta</em> drove <em>184 leads</em> at <em>$126.78</em>;<br><em class="g">Google</em> delivered <em>24 conversions</em> at <em>$187.69</em>.</div>
+    <div class="hero-stats">
+      <div class="h-stat"><div class="l">Total spend</div><div class="v">$27,832</div><div class="s">across both channels</div></div>
+      <div class="h-stat"><div class="l">Total conversions</div><div class="v">208</div><div class="s">24 Google · 184 Meta</div></div>
+      <div class="h-stat"><div class="l">Blended CPA</div><div class="v">$133.81</div><div class="s">spend ÷ conversions</div></div>
+      <div class="h-stat"><div class="l">Combined clicks</div><div class="v">14,757</div><div class="s">511 G · 14,246 M</div></div>
+    </div>
+  </div>
+
+  <!-- Top row -->
+  <div class="t-top-row">
+    <div class="tile t-google-conv">
+      <div class="ch-chip g"><i class="fab fa-google"></i>Google</div>
+      <div class="label">Conversions</div>
+      <div class="number">24</div>
+      <div class="caption">CPA · <b>$187.69</b></div>
+    </div>
+    <div class="tile t-meta-leads">
+      <div class="ch-chip m"><i class="fab fa-meta"></i>Meta</div>
+      <div class="label">Website leads</div>
+      <div class="number">184</div>
+      <div class="caption">Cost / lead · <b>$126.78</b></div>
+    </div>
+    <div class="tile t-total">
+      <div class="label">Total spend</div>
+      <div class="number">$27,832<small>.03</small></div>
+      <div class="caption">134 days combined · <b>$207.70</b> avg / day</div>
+    </div>
+  </div>
+
+  <!-- TREND -->
+  <div class="tile t-trend">
+    <div class="trend-head">
+      <div>
+        <div class="label">Trend</div>
+        <div class="h-title">Spend & conversions · Apr 24 → Sep 4</div>
+      </div>
+      <div class="legend-inline">
+        <span><span class="dot g"></span>Google</span>
+        <span><span class="dot m"></span>Meta</span>
+      </div>
+    </div>
+    <div class="trend-stack">
+      <div class="chart-block">
+        <div class="micro-label">Daily spend · USD</div>
+        <div class="chart-wrap"><canvas id="spendChart"></canvas></div>
+      </div>
+      <div class="chart-block">
+        <div class="micro-label">Conversions · per week</div>
+        <div class="chart-wrap"><canvas id="convChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="tile t-summary">
+    <div class="label">Executive summary</div>
+    <div class="summary-title">Meta brings the volume, <em>Google brings the buyers</em> — and the budget split follows the search demand.</div>
+    <div class="summary-body">
+      <p>Across 134 days Eternal Wellness invested <b>$27,832</b> for <b>208 tracked conversions</b> at a blended CPA of <b>$133.81</b>. Meta took <b>83.8%</b> of the budget and returned <b>88%</b> of the conversions.</p>
+      <p><span class="tag-g"><i class="fab fa-google"></i>Google</span> is deliberately small — <b>$33.61/day</b> against Meta's <b>$174.09/day</b> — because the search demand is not there. In Traverse City the Emface keyword set averages about <b>30 searches a month</b> and the CO2 laser terms about <b>40</b>. <em>Search - Emface</em> already holds <b>51.8%</b> impression share and still sees only <b>32 impressions a day</b>; more budget cannot buy queries nobody is typing, which is why the Helix CO2 campaign sits paused.</p>
+      <p><span class="tag-m"><i class="fab fa-meta"></i>Meta</span> does the prospecting instead, at <b>184</b> leads to Google's <b>24</b>. Both walk people through the door at about the same rate, but Google's leads are the ones who buy: <b>16.7%</b> became paying guests against Meta's <b>10.3%</b>, worth <b>$350</b> of booked revenue per lead against <b>$189</b>, at <b>1.86× ROAS</b> against <b>1.49×</b>.</p>
+    </div>
+  </div>
+
+  <!-- COMPACT KPIs -->
+  <div class="tile brand-google compact t-g-cpc">
+    <div class="label">Google · CPC</div>
+    <div class="number">$8.81</div>
+    <div class="caption">Avg cost per click</div>
+  </div>
+  <div class="tile brand-google compact t-g-clicks">
+    <div class="label">Google · Clicks</div>
+    <div class="number">511</div>
+    <div class="caption">CTR · <b>5.77%</b></div>
+  </div>
+  <div class="tile brand-meta compact t-m-cpm">
+    <div class="label">Meta · CPM</div>
+    <div class="number">$35.65</div>
+    <div class="caption">Avg cost / 1K impressions</div>
+  </div>
+  <div class="tile brand-meta compact t-m-reach">
+    <div class="label">Meta · Reach</div>
+    <div class="number">84.8<small>K</small></div>
+    <div class="caption">Unique people · 134 days</div>
+  </div>
+
+  <!-- SHARE -->
+  <div class="tile t-share">
+    <div class="label">Spend share</div>
+    <div class="pie-wrap">
+      <canvas id="pie"></canvas>
+      <div class="pie-center"><div><div class="l">Total</div><div class="v">$27,832</div></div></div>
+    </div>
+    <div class="legend-block">
+      <div class="row">
+        <div class="left"><span class="dot" style="background:var(--c-google)"></span>Google</div>
+        <div><span class="v">$4,504.16</span><span class="pct">16.2%</span></div>
+      </div>
+      <div class="row">
+        <div class="left"><span class="dot" style="background:var(--c-meta)"></span>Meta</div>
+        <div><span class="v">$23,327.87</span><span class="pct">83.8%</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</div><!-- /screen 01 -->
+
+<div class="section-head">
+  <div class="sh-left">
+    <div class="sh-num">02</div>
+    <div>
+      <div class="sh-eyebrow">revenue &amp; profitability</div>
+      <div class="sh-title">What the ad leads actually spent · <em>ad-attributed sales</em></div>
+    </div>
+  </div>
+  <div class="sh-pill"><i class="fas fa-database"></i>Zenoti sales accrual · <b>Apr 24 → Sep 4</b></div>
+</div>
+
+<main class="rev">
+
+  <!-- HEADLINE CARDS -->
+  <div class="v-cards">
+    <div class="tile vcard pos">
+      <div class="l">Revenue from ads</div>
+      <div class="n">$43,251<small>.29</small></div>
+      <div class="s">51 guests · 183 sale lines</div>
+    </div>
+    <div class="tile vcard cost">
+      <div class="l">Ad costs</div>
+      <div class="n">$27,832<small>.03</small></div>
+      <div class="s">Meta + Google</div>
+    </div>
+    <div class="tile vcard pos">
+      <div class="l">Profit</div>
+      <div class="n">+$15,419<small>.26</small></div>
+      <div class="s">revenue − ad costs</div>
+    </div>
+    <div class="tile vcard accent">
+      <div class="l">ROAS</div>
+      <div class="n">1.55<small>×</small></div>
+      <div class="s"><b>1.00×</b> = break-even</div>
+    </div>
+    <div class="tile vcard">
+      <div class="l">Share of revenue</div>
+      <div class="n">6.3<small>%</small></div>
+      <div class="s">of <b>$691,059</b> clinic-wide</div>
+    </div>
+  </div>
+
+  <!-- MONTH BY MONTH -->
+  <div class="tile v-month">
+    <div class="trend-head">
+      <div>
+        <div class="label">Month by month</div>
+        <div class="h-title">Ad cost vs. revenue from ad leads</div>
+      </div>
+      <div class="legend-inline">
+        <span><span class="dot cost"></span>Ad cost</span>
+        <span><span class="dot r"></span>Revenue from ad leads</span>
+      </div>
+    </div>
+    <div class="month-stack">
+      <div class="chart-block">
+        <div class="micro-label">Total ad cost vs. revenue · USD</div>
+        <div class="chart-wrap"><canvas id="monthChart"></canvas></div>
+      </div>
+      <div class="chart-block">
+        <div class="micro-label">Return on ad spend · dashed line = break-even (1.00×)</div>
+        <div class="chart-wrap"><canvas id="roasChart"></canvas></div>
+      </div>
+    </div>
+    <div class="be-note">April covers Apr 24–30 and September covers Sep 1–4 only, so both months are partial. Revenue is booked on sale date, which lags the spend that created the lead.</div>
+  </div>
+
+  <!-- CONSULTATION PIPELINE -->
+  <div class="tile v-consult">
+    <div class="label">Consultation pipeline</div>
+    <div class="h-title" style="font-weight:600;font-size:14px;color:var(--fg-strong);margin-top:3px;letter-spacing:-.1px">From lead to treatment</div>
+    <div class="funnel">
+      <div class="fstep">
+        <div class="frow"><span class="fl">Leads reported by the platforms</span><span class="fv">208</span></div>
+        <div class="ftrack"><span class="a" style="width:100%"></span></div>
+      </div>
+      <div class="fstep">
+        <div class="frow"><span class="fl">Matched to a guest record with activity</span><span class="fv">51</span></div>
+        <div class="ftrack"><span class="b" style="width:24.5%"></span></div>
+      </div>
+      <div class="fstep">
+        <div class="frow"><span class="fl">Attended a consultation</span><span class="fv">38</span></div>
+        <div class="ftrack"><span class="c" style="width:18.3%"></span></div>
+      </div>
+      <div class="fstep">
+        <div class="frow"><span class="fl">Spent money on treatment or product</span><span class="fv">23</span></div>
+        <div class="ftrack"><span class="d" style="width:11.1%"></span></div>
+      </div>
+    </div>
+    <div class="hilite">
+      <div class="l">consulted · no spend yet</div>
+      <div class="v">21</div>
+      <div class="s">ad leads sat through a consultation and have booked <b>$0</b> in treatment so far. They are already in the building — this is unbanked pipeline, not lost spend.</div>
+    </div>
+    <div class="mini-rows">
+      <div><span>Guests still at $0 in total spend</span><b>28 of 51</b></div>
+      <div><span>Guests with a cancellation or no-show</span><b>16 · $700 in fees</b></div>
+      <div><span>$0 guests with no consult line at all</span><b>7</b></div>
+    </div>
+  </div>
+
+  <!-- SERVICES SOLD -->
+  <div class="tile v-services">
+    <div class="label">Services sold to ad leads</div>
+    <div class="h-title" style="font-weight:600;font-size:14px;color:var(--fg-strong);margin-top:3px;letter-spacing:-.1px">Grouped by treatment family · Apr 24 → Sep 4</div>
+    <div class="tbl-wrap">
+      <table class="dtable">
+        <thead>
+          <tr><th>Service family</th><th style="text-align:left">Share of ad-lead revenue</th><th>Revenue</th><th>Guests</th><th>Lines</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">Emface</span><span class="sub">1, 2 &amp; 3 areas, TMJ, 4- and 6-session packages</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:100.0%"></span></div><span class="pc">47.3%</span></div></td><td class="money">$20,474.99</td><td>7</td><td>37</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">Injectables</span><span class="sub">Daxxify, Botox, Dysport, Restylane, Juvéderm, Sculptra, PRP, filler</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:38.5%"></span></div><span class="pc">18.2%</span></div></td><td class="money">$7,854.60</td><td>7</td><td>24</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">Exion RF microneedling</span><span class="sub">Face and small-area 4-session packages</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:22.8%"></span></div><span class="pc">10.8%</span></div></td><td class="money">$4,675.00</td><td>2</td><td>2</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">Memberships</span><span class="sub">Black, Platinum and White tiers</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:15.2%"></span></div><span class="pc">7.2%</span></div></td><td class="money">$3,100.00</td><td>5</td><td>17</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">SkinPen microneedling</span><span class="sub">Single face treatments and a 3-session package</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:9.7%"></span></div><span class="pc">4.6%</span></div></td><td class="money">$2,005.00</td><td>2</td><td>3</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">Skincare &amp; retail</span><span class="sub">SkinBetter, Colorescience, VI Derm, lash products</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:7.2%"></span></div><span class="pc">3.4%</span></div></td><td class="money">$1,476.20</td><td>8</td><td>12</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">Custom packages</span><span class="sub">Built per guest at the counter</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:4.9%"></span></div><span class="pc">2.3%</span></div></td><td class="money">$997.50</td><td>2</td><td>2</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">DEKA Fusion laser</span><span class="sub">Face</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:4.7%"></span></div><span class="pc">2.2%</span></div></td><td class="money">$945.00</td><td>1</td><td>1</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">HydraFacial</span><span class="sub">Deluxe and Express</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:3.6%"></span></div><span class="pc">1.7%</span></div></td><td class="money">$719.00</td><td>3</td><td>3</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">Cancellation &amp; no-show fees</span><span class="sub">Collected, not a treatment</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:3.4%"></span></div><span class="pc">1.6%</span></div></td><td class="money">$700.00</td><td>16</td><td>20</td></tr>
+          <tr><td><div class="svc"><span class="sq"></span><span><span class="nm">Pre-paid cards</span><span class="sub">Balance loaded, treatment still to come</span></span></div></td><td><div class="sharecell"><div class="bar"><span style="width:1.5%"></span></div><span class="pc">0.7%</span></div></td><td class="money">$304.00</td><td>5</td><td>7</td></tr>
+          <tr class="zero"><td><div class="svc"><span class="sq mute"></span><span><span class="nm">Consults &amp; follow-ups</span><span class="sub">Booked at $0 — the visit that precedes a sale</span></span></div></td><td><div class="sharecell"><div class="bar"></div><span class="pc">—</span></div></td><td class="money">$0.00</td><td>38</td><td>45</td></tr>
+          <tr class="zero"><td><div class="svc"><span class="sq mute"></span><span><span class="nm">Gift cards issued</span><span class="sub">$0 issuances, redeemed value lands elsewhere</span></span></div></td><td><div class="sharecell"><div class="bar"></div><span class="pc">—</span></div></td><td class="money">$0.00</td><td>5</td><td>10</td></tr>
+          <tr class="tot"><td>Total</td><td></td><td class="money">$43,251.29</td><td>51</td><td>183</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="svc-foot">
+      <div><span class="l">Guests who produced revenue</span><span class="v">23 of 51</span></div>
+      <div><span class="l">Average per paying guest</span><span class="v">$1,880.49</span></div>
+      <div><span class="l">Median per paying guest</span><span class="v">$507.50</span></div>
+      <div><span class="l">Top 5 guests' share of revenue</span><span class="v">66.9%</span></div>
+    </div>
+  </div>
+
+  <!-- METHOD -->
+  <div class="tile v-note">
+    <div class="label">How this was measured</div>
+    <div class="note-list">
+      <div><b>Attribution by name match.</b> Meta and Google leads were matched to Zenoti guest records on normalised first + last name. Three spelling variants were accepted as matches; three near-misses with different surnames were rejected. Leads with any other source were excluded.</div>
+      <div><b>Accrual basis, sale date.</b> Revenue is Zenoti Sales (inc. tax) booked on sale date between Apr 24 and Sep 4. That includes services delivered out of packages bought earlier, and packages bought now for treatment later.</div>
+      <div><b>Zero-dollar lines are kept.</b> Consults, follow-ups, waived fees and $0 gift-card issuances stay in the detail so the visit activity is visible. They are why 51 guests transacted but only 23 produced revenue.</div>
+      <div><b>Period snapshot, not a cohort.</b> Leads generated late in the window have not had time to buy, and some early sales came from leads created before Apr 24. Over 134 days this largely evens out, but the ROAS is a window measurement.</div>
+    </div>
+  </div>
+
+  <!-- PLATFORM -->
+  <div class="tile v-platform">
+    <div class="label">By platform</div>
+    <div class="h-title" style="font-weight:600;font-size:14px;color:var(--fg-strong);margin-top:3px;letter-spacing:-.1px">Both channels cleared break-even</div>
+    <div class="tbl-wrap">
+      <table class="dtable">
+        <thead>
+          <tr><th>Platform</th><th>Ad spend</th><th>Revenue</th><th>ROAS</th><th>Net</th><th>Guests</th><th>Spend / guest</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="chip-m">Meta</span></td><td class="money">$23,327.87</td><td class="money">$34,857.37</td><td class="pos">1.49×</td><td class="pos">+$11,529.50</td><td>44</td><td>$530.18</td></tr>
+          <tr><td><span class="chip-g">Google</span></td><td class="money">$4,504.16</td><td class="money">$8,393.92</td><td class="pos">1.86×</td><td class="pos">+$3,889.76</td><td>6</td><td>$750.69</td></tr>
+          <tr class="tot"><td>Total</td><td class="money">$27,832.03</td><td class="money">$43,251.29</td><td class="pos">1.55×</td><td class="pos">+$15,419.26</td><td>51</td><td>$545.73</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="be-note">Google converts a smaller number of leads at a higher value per guest, which is what pushes its ROAS above Meta's on a sixth of the budget. One further guest matched to both platforms and spent $0, so the guest counts total 51 rather than 50.</div>
+  </div>
+
+</main>
+
+
+<script>
+const dates=["04-24","04-25","04-26","04-27","04-28","04-29","04-30","05-01","05-02","05-03","05-04","05-05","05-06","05-07","05-08","05-09","05-10","05-11","05-12","05-13","05-14","05-15","05-16","05-17","05-18","05-19","05-20","05-21","05-22","05-23","05-24","05-25","05-26","05-27","05-28","05-29","05-30","05-31","06-01","06-02","06-03","06-04","06-05","06-06","06-07","06-08","06-09","06-10","06-11","06-12","06-13","06-14","06-15","06-16","06-17","06-18","06-19","06-20","06-21","06-22","06-23","06-24","06-25","06-26","06-27","06-28","06-29","06-30","07-01","07-02","07-03","07-04","07-05","07-06","07-07","07-08","07-09","07-10","07-11","07-12","07-13","07-14","07-15","07-16","07-17","07-18","07-19","07-20","07-21","07-22","07-23","07-24","07-25","07-26","07-27","07-28","07-29","07-30","07-31","08-01","08-02","08-03","08-04","08-05","08-06","08-07","08-08","08-09","08-10","08-11","08-12","08-13","08-14","08-15","08-16","08-17","08-18","08-19","08-20","08-21","08-22","08-23","08-24","08-25","08-26","08-27","08-28","08-29","08-30","08-31","09-01","09-02","09-03","09-04"];
+const gCost=[0,0,34.24,29.12,90.57,99.99,108.21,51.42,51.48,53.08,48.3,47.26,61.22,52.03,72.49,37.79,20.7,77.25,61.88,70.71,27.28,24.99,33.66,47.56,101.58,30.41,12.26,40.55,22.27,40.28,116.43,10.2,46.73,92.07,40.03,76.5,0,82.18,35.82,35.11,45.3,20.13,21.58,7.83,27.9,24.67,27.5,25.9,21.88,25.02,20.2,18.17,23.26,18.54,19.08,0,0,0,0,0,0,27.62,8.3,25.91,21.65,28.32,27.7,31.98,40.62,41.82,33.17,13.49,35.1,3.16,0,66.14,55.25,35.48,34.88,34.66,29.08,17.46,12.5,0,0,56.72,34.6,58.19,43.63,15.18,41.42,28.1,0.37,14.02,61.18,24.07,22.05,52.91,10.53,34.36,29.16,39.0,31.54,26.92,30.21,11.73,58.24,35.87,20.46,16.11,25.26,45.06,27.17,33.99,31.91,32.36,28.72,29.97,31.66,29.81,25.72,0,55.17,33.12,30.17,31.03,23.57,21.17,8.07,19.25,44.72,48.87,49.06,46.85];
+const mCost=[160.14,99.86,150.09,161.92,156.25,139.79,142.92,146.56,135.79,157.84,176.78,150.98,140.23,151.92,122.21,149.04,169.48,150.13,138.18,149.82,135.9,129.8,126.56,176.65,169.22,144.68,136.27,124.35,110.16,118.61,164.95,161.3,153.4,146.02,145.57,143.7,124.52,181.02,154.61,201.84,201.31,180.57,154.54,168.32,227.83,202.76,206.5,182.67,195.49,170.67,176.2,235.6,207.66,192.87,217.51,179.53,173.74,165.54,228.52,193.97,201.46,189.75,190.34,180.76,145,236.56,223,198.59,186.79,186.05,152.12,144.13,214.69,189.64,208.61,178.86,158.1,156.83,153.13,221.84,204.26,178.54,168.41,163.46,187.55,135.44,189.21,220.54,189.89,176.7,172.47,160.91,149.71,213.05,200.67,187.56,185.68,157.52,163.44,151.3,206.6,169.16,203.27,162.2,178.72,161.94,177.25,244.65,186.25,158.92,183.43,170.97,173.46,141.58,208.1,185.26,191.72,190.87,189.5,185.21,175.58,230.83,179.71,195.27,174.97,187.6,195.88,165.09,225.03,189.35,184.41,185.19,198.12,138.36];
+const weeks=["Apr 24","May 01","May 08","May 15","May 22","May 29","Jun 05","Jun 12","Jun 19","Jun 26","Jul 03","Jul 10","Jul 17","Jul 24","Jul 31","Aug 07","Aug 14","Aug 21","Aug 28"];
+const gConv=[4,6,0,0,1,1,0,0,0,2,2,1,1,2,1,0,0,0,3];
+const mConv=[11,10,7,16,9,5,11,7,9,8,10,9,13,12,12,11,8,8,8];
+
+const C_G='#E29B32';     // amber-500
+const C_M='#4C9DAD';     // teal-500
+const TXT='#8F9BB7';     // slate-400 (axis text)
+const GRID='rgba(143,155,183,0.18)';
+
+Chart.defaults.font.family='Poppins';
+Chart.defaults.color=TXT;
+Chart.defaults.font.weight='500';
+
+new Chart(document.getElementById('spendChart'),{
+  type:'line',
+  data:{labels:dates,datasets:[
+    {label:'Google',data:gCost,borderColor:C_G,backgroundColor:'rgba(226,155,50,0.14)',fill:true,tension:.35,borderWidth:1.8,pointRadius:0,pointHoverRadius:4},
+    {label:'Meta',data:mCost,borderColor:C_M,backgroundColor:'rgba(76,157,173,0.16)',fill:true,tension:.35,borderWidth:1.8,pointRadius:0,pointHoverRadius:4}
+  ]},
+  options:{
+    maintainAspectRatio:false,responsive:true,
+    interaction:{intersect:false,mode:'index'},
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toFixed(2)}}},
+    scales:{
+      x:{grid:{display:false},border:{display:false},ticks:{color:TXT,font:{size:9,weight:'500'},maxRotation:0,autoSkip:true,autoSkipPadding:26}},
+      y:{grid:{color:GRID},border:{display:false},beginAtZero:true,ticks:{color:TXT,font:{size:9},callback:v=>'$'+v}}
+    }
+  }
+});
+
+new Chart(document.getElementById('convChart'),{
+  type:'bar',
+  data:{labels:weeks,datasets:[
+    {label:'Google',data:gConv,backgroundColor:C_G,borderRadius:3,barPercentage:.86,categoryPercentage:.9,stack:'conv'},
+    {label:'Meta',data:mConv,backgroundColor:C_M,borderRadius:3,barPercentage:.86,categoryPercentage:.9,stack:'conv'}
+  ]},
+  options:{
+    maintainAspectRatio:false,responsive:true,
+    interaction:{intersect:false,mode:'index'},
+    plugins:{legend:{display:false},tooltip:{callbacks:{title:c=>'Week of '+c[0].label}}},
+    scales:{
+      x:{stacked:true,grid:{display:false},border:{display:false},ticks:{color:TXT,font:{size:8.5},maxRotation:0,autoSkip:true,autoSkipPadding:8}},
+      y:{stacked:true,grid:{color:GRID},border:{display:false},ticks:{color:TXT,font:{size:9},stepSize:5}}
+    }
+  }
+});
+
+new Chart(document.getElementById('pie'),{
+  type:'doughnut',
+  data:{labels:['Google','Meta'],datasets:[{
+    data:[4504.16,23327.87],
+    backgroundColor:[C_G,C_M],
+    borderColor:'#fff',borderWidth:3,hoverOffset:6
+  }]},
+  options:{maintainAspectRatio:false,responsive:true,cutout:'72%',plugins:{legend:{display:false}}}
+});
+
+/* ─────────────────────────────────────────── PART 02 · REVENUE CHARTS
+   Palette: Google amber + Meta teal carry over from part 01; C_R (revenue
+   green) and C_N (below break-even rose) were CVD-validated against both. */
+const C_R='#2E7D32';
+const C_N='#C2596B';
+
+const months   = ['Apr *','May','Jun','Jul','Aug','Sep *'];
+const costM    = [1373.09, 6082.23, 6373.09, 6471.58, 6636.44, 895.60];
+const revM     = [ 995.00,13857.99, 6368.59,12720.94, 5467.57,3841.20];
+const roasM    = [   0.72,    2.28,    1.00,    1.97,    0.82,   4.29];
+const usd = v => '$' + v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const kUsd = v => '$' + (v>=1000 ? (v/1000).toFixed(1)+'k' : v.toFixed(0));
+
+/* Total ad cost against revenue, one dollar axis, two series. Both series
+   carry a value on every bar — the direct label is what keeps the red/green
+   pair readable for deuteranopes, whose separation sits on the floor. */
+const barValueLabels = {
+  id:'barValueLabels',
+  afterDatasetsDraw(chart){
+    const {ctx}=chart;
+    chart.data.datasets.forEach((ds,di)=>{
+      chart.getDatasetMeta(di).data.forEach((bar,i)=>{
+        ctx.save();
+        ctx.font='600 9.5px Poppins'; ctx.textAlign='center'; ctx.textBaseline='bottom';
+        ctx.fillStyle = di===0 ? '#8E3A49' : '#215A24';
+        ctx.fillText(kUsd(ds.data[i]), bar.x, bar.y-4);
+        ctx.restore();
+      });
+    });
+  }
+};
+new Chart(document.getElementById('monthChart'),{
+  type:'bar',
+  data:{labels:months,datasets:[
+    {label:'Ad cost', data:costM, backgroundColor:C_N, borderRadius:4, borderSkipped:false, barPercentage:.86, categoryPercentage:.7},
+    {label:'Revenue', data:revM,  backgroundColor:C_R, borderRadius:4, borderSkipped:false, barPercentage:.86, categoryPercentage:.7}
+  ]},
+  options:{
+    maintainAspectRatio:false,responsive:true,
+    layout:{padding:{top:14}},
+    interaction:{intersect:false,mode:'index'},
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{
+        label:c=>c.dataset.label+': '+usd(c.parsed.y),
+        afterBody:c=>'ROAS: '+roasM[c[0].dataIndex].toFixed(2)+'\u00d7'
+      }}
+    },
+    scales:{
+      x:{grid:{display:false},border:{display:false},ticks:{color:TXT,font:{size:10,weight:'500'}}},
+      y:{grid:{color:GRID},border:{display:false},beginAtZero:true,
+         ticks:{color:TXT,font:{size:9},callback:v=>'$'+(v>=1000?(v/1000)+'k':v)}}
+    }
+  },
+  plugins:[barValueLabels]
+});
+
+/* ROAS per month. Single series, coloured by polarity against break-even,
+   with a value on every bar and a dashed 1.00x reference line — the number
+   and the line carry the meaning, not the colour alone. */
+const beLine = {
+  id:'beLine',
+  afterDatasetsDraw(chart){
+    const {ctx, chartArea:{left,right}, scales:{y}} = chart;
+    const yy = y.getPixelForValue(1);
+    ctx.save();
+    ctx.setLineDash([4,4]); ctx.lineWidth=1.5; ctx.strokeStyle='rgba(58,71,95,0.45)';
+    ctx.beginPath(); ctx.moveTo(left,yy); ctx.lineTo(right,yy); ctx.stroke();
+    ctx.restore();
+  }
+};
+const roasLabels = {
+  id:'roasLabels',
+  afterDatasetsDraw(chart){
+    const {ctx} = chart;
+    chart.getDatasetMeta(0).data.forEach((bar,i)=>{
+      ctx.save();
+      ctx.font='600 10.5px Poppins'; ctx.textAlign='center'; ctx.textBaseline='bottom';
+      ctx.fillStyle = roasM[i] >= 1 ? '#215A24' : '#8E3A49';
+      ctx.fillText(roasM[i].toFixed(2)+'×', bar.x, bar.y-5);
+      ctx.restore();
+    });
+  }
+};
+new Chart(document.getElementById('roasChart'),{
+  type:'bar',
+  data:{labels:months,datasets:[{
+    label:'ROAS', data:roasM,
+    backgroundColor:roasM.map(v=>v>=1?C_R:C_N),
+    borderRadius:4, borderSkipped:false, barPercentage:.62, categoryPercentage:.72
+  }]},
+  options:{
+    maintainAspectRatio:false,responsive:true,
+    layout:{padding:{top:16}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(2)+'× return on ad spend'}}
+    },
+    scales:{
+      x:{grid:{display:false},border:{display:false},ticks:{display:false}},
+      y:{grid:{color:GRID},border:{display:false},beginAtZero:true,
+         ticks:{color:TXT,font:{size:9},stepSize:1,callback:v=>v+'×'}}
+    }
+  },
+  plugins:[beLine, roasLabels]
+});
+
+</script>
+</body>
+</html>
